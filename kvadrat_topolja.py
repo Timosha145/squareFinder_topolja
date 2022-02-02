@@ -1,6 +1,49 @@
 from tkinter import *
 from math import *
+import matplotlib.pyplot as plt
+import numpy as np
 
+def handler():    
+    if (a.get()!="" and b.get()!="" and c.get()!=""):
+        a1=int(a.get())
+        b1=int(b.get())
+        c1=int(c.get())
+        D=b1*b1-4*a1*c1
+        if D>0:
+            xround=round((-1*b1+sqrt(D))/(2*a1),2)
+            xround1=round((-1*b1-sqrt(D))/(2*a1),2)
+            t=f"X1={xround} \nX2={xround1}"
+            flag=True
+        elif D==0:
+            xround=round((-1*b1)/(2*a1),2)
+            t=f"X1={xround}"
+            flag=True
+        else:
+            t="Корней нет"
+            flag=False
+        lblResult.configure(text=f"D={D}\n{t}")
+    return flag,D,t
+def graafik():
+    flag,D,t=handler()
+    if flag==True:
+        a1=int(a.get())
+        b1=int(b.get())
+        c1=int(c.get())
+        x0=(-b1)/(2*a1)
+        y0=a1*x0*x0+b1*x0+c1
+        x = np.arange(x0-10, x0+10, 0.5)
+        y=a1*x*x+b1*x+c1
+        fig = plt.figure()
+        plt.plot(x, y,'b:o', x0, y0,'g-d')
+        plt.title('Квадратное уравнение')
+        plt.ylabel('y')
+        plt.xlabel('x')
+        plt.grid(True)
+        plt.show()
+        text=f"Вершина параболлы ({x0},{y0})"
+    else:
+        text=f"График нет возможности построить"
+    lblResult.configure(text=f"D={D}\n{t}\n{text}")
 def squareFinder(event):
 	a.config(bg="cyan")
 	b.config(bg="cyan")
@@ -67,7 +110,7 @@ buttonSolve=Button(window,text="Решить",font="Arial 20",width=8,bg="green"
 buttonSolve.pack(side=LEFT)
 buttonSolve.bind("<Button-1>",squareFinder)
 
-button1=Button(window,text="График",font="Arial 20",width=8,bg="green")
+button1=Button(window,text="График",font="Arial 20",width=8,bg="green",command=graafik)
 button1.pack(side=LEFT)
 
 window.mainloop()
