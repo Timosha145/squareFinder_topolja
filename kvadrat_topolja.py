@@ -3,29 +3,29 @@ from math import *
 import matplotlib.pyplot as plt
 import numpy as np
 
-def handler():    
+def graphBuilder():    
     if (a.get()!="" and b.get()!="" and c.get()!=""):
         a1=int(a.get())
         b1=int(b.get())
         c1=int(c.get())
         D=b1*b1-4*a1*c1
         if D>0:
-            xround=round((-1*b1+sqrt(D))/(2*a1),2)
-            xround1=round((-1*b1-sqrt(D))/(2*a1),2)
-            t=f"X1={xround} \nX2={xround1}"
-            flag=True
+            x1=round((-1*b1+sqrt(D))/(2*a1),2)
+            x2=round((-1*b1-sqrt(D))/(2*a1),2)
+            t=f"X1={x1} \nX2={x2}"
+            isGraph=True
         elif D==0:
-            xround=round((-1*b1)/(2*a1),2)
-            t=f"X1={xround}"
-            flag=True
+            x=round((-1*b1)/(2*a1),2)
+            t=f"x={x}"
+            isGraph=True
         else:
             t="Корней нет"
-            flag=False
+            isGraph=False
         lblResult.configure(text=f"D={D}\n{t}")
-    return flag,D,t
-def graafik():
-    flag,D,t=handler()
-    if flag==True:
+    return isGraph,D,t
+def graph():
+    isGraph,D,t=graphBuilder()
+    if isGraph==True:
         a1=int(a.get())
         b1=int(b.get())
         c1=int(c.get())
@@ -110,7 +110,7 @@ buttonSolve=Button(window,text="Решить",font="Arial 20",width=8,bg="green"
 buttonSolve.pack(side=LEFT)
 buttonSolve.bind("<Button-1>",squareFinder)
 
-button1=Button(window,text="График",font="Arial 20",width=8,bg="green",command=graafik)
+button1=Button(window,text="График",font="Arial 20",width=8,bg="green",command=graph)
 button1.pack(side=LEFT)
 
 window.mainloop()
